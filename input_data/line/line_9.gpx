@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx version="1.1" creator="http://www.geoplaner.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.topografix.com/GPX/1/1" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+<wpt lat="46.76824" lon="6.9254">
+<name>WP01-A</name>
+</wpt>
+<wpt lat="46.76815" lon="6.92532">
+<name>WP02-B</name>
+</wpt>
+<wpt lat="46.76826" lon="6.92479">
+<name>WP03-C</name>
+</wpt>
+<wpt lat="46.76787" lon="6.92456">
+<name>WP04-D</name>
+</wpt>
+<wpt lat="46.76783" lon="6.9246">
+<name>WP05-E</name>
+</wpt>
+</gpx>
