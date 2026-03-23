@@ -39,7 +39,7 @@ Or directly open the notebooks from there:
 > How do I update my Python libraries to the latest versions, when using Mambaforge? 
 > See [UPDATELIBRARIES.md](UPDATELIBRARIES.md)
 
-If you get many problems with your git branch or repo, please get in touch with [Luca](mailto:luca.tomasini@heig-vd) or [Antoine](mailto:antoine.giraldi@heig-vd.ch).
+If you get many problems with your git branch or repo, please get in touch with [Luca](mailto:luca.tomasini@heig-vd) or [Thierry](mailto:thierry.fracheboud@heig-vd.ch).
 
 ## Contributors
 
