@@ -171,7 +171,8 @@ source .venv/bin/activate
   ```bash
   pip install -r requirements_linux.txt
   ```
-
+> [!Important]
+> Use the requirements file from your repository, not from this one, for a project, it's only an exemple of requirements file.
 ### Commiting your work with Git
 <details>
 <summary> Commiting your work with Git </summary>
