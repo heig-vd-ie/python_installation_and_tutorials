@@ -114,3 +114,122 @@ def trafo(ax, p1, p2, label="T1", text_dx=0.25, text_dy=0.15,
     ax.add_patch(Circle((xm + 0.09, ym), 0.09, fill=False, ec=color, lw=lw))
 
     ax.text(xm + text_dx, ym + text_dy, label, fontsize=fontsize)
+    
+def plot_pandapower_line_style(net, pos, bus_label_offset, line_label_offset,
+                                gen_label_offset, load_label_offset, figsize=(11, 6), facecolor="#efefef" ):
+    
+    fig, ax = create_figure(figsize=figsize, facecolor=facecolor)
+
+    # Draw lines
+    for idx, row in net.line.iterrows():
+        p1 = pos[int(row.from_bus)]
+        p2 = pos[int(row.to_bus)]
+
+        line_name = row["name"] 
+        text_dx, text_dy = line_label_offset[line_name]
+
+        line(
+            ax,
+            p1,
+            p2,
+            label=line_name,
+            color="black",
+            lw=2.2,
+            text_dx=text_dx,
+            text_dy=text_dy,
+            fontsize=11
+        )
+
+        square_on_line(ax, p1, p2, t=0.12, s=0.11)
+        square_on_line(ax, p1, p2, t=0.88, s=0.11)
+
+    # Draw transformers
+    for idx, row in net.trafo.iterrows():
+        p1 = pos[int(row.hv_bus)]
+        p2 = pos[int(row.lv_bus)]
+
+        trafo_name = row["name"] 
+
+        trafo(
+            ax,
+            p1,
+            p2,
+            label=trafo_name,
+            color="black",
+            lw=1.6,
+            text_dx=0.35,
+            text_dy=0.15,
+            fontsize=11,
+        )
+
+    # Draw buses
+    for b, (x, y) in pos.items():
+        bus_name = net.bus.at[b, "name"] 
+        text_dx, text_dy = bus_label_offset[b]
+        bus(ax, x, y, bus_name, text_dx=text_dx, text_dy=text_dy, fontsize=13)
+
+    # Draw external grid
+    for idx, row in net.ext_grid.iterrows():
+        x, y = pos[int(row.bus)]
+
+        label = row["name"] 
+
+        ext_grid(
+            ax,
+            x,
+            y,
+            label=label,
+            color="black",
+            lw=1.4,
+            text_dx=-0.2,
+            text_dy= 1.1,
+            fontsize=10,    
+        )
+
+    # Draw generators
+    for idx, row in net.gen.iterrows():
+        x, y = pos[int(row.bus)]
+
+        label = row["name"]
+        text_dx, text_dy = gen_label_offset[label] 
+
+        gen_up(
+            ax,
+            x,
+            y,
+            label=label,
+            color="black",
+            lw=1.4,
+            text_dx=text_dx,
+            text_dy=text_dy,
+            fontsize=10
+        )
+
+    # Draw loads
+    for idx, row in net.load.iterrows():
+        x, y = pos[int(row.bus)]
+
+        label = row["name"] if "name" in row and row["name"] is not None else f"Load {idx}"
+        text_dx, text_dy = load_label_offset[label]
+
+        load_down(
+            ax,
+            x,
+            y,
+            label=label,
+            color="black",
+            lw=1.4,
+            text_dx=text_dx,
+            text_dy=text_dy,
+            fontsize=10
+        )
+
+    xs = [p[0] for p in pos.values()]
+    ys = [p[1] for p in pos.values()]
+
+    ax.set_xlim(min(xs) - 1.0, max(xs) + 1.5)
+    ax.set_ylim(min(ys) - 1.2, max(ys) + 1.8)
+    ax.set_aspect("equal")
+    ax.axis("off")
+
+    return fig, ax

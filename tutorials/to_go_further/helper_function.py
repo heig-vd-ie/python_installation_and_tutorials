@@ -121,16 +121,16 @@ def build_jacobian(Ybus, Vm, Va_deg, slack_bus, pq_buses):
 
     return J, angle_buses, pq_buses
 
-def power_mismatch(Ybus, Vm, Va_deg, P_spec, Q_spec, slack_bus, pq_buses):
+def power_mismatch(Ybus, Vm, Va_deg, P_net, Q_net, slack_bus, pq_buses):
     P_calc, Q_calc = compute_power_injections(Ybus, Vm, Va_deg)
     n = len(Vm)
     angle_buses = [i for i in range(n) if i != slack_bus]
-    dP = np.array([P_spec[i] - P_calc[i] for i in angle_buses])
-    dQ = np.array([Q_spec[i] - Q_calc[i] for i in pq_buses])
+    dP = np.array([P_net[i] - P_calc[i] for i in angle_buses])
+    dQ = np.array([Q_net[i] - Q_calc[i] for i in pq_buses])
     mismatch = np.concatenate([dP, dQ])
     return mismatch
 
-def newton_raphson_power_flow(Ybus, P_spec, Q_spec, slack_bus, pv_buses, pq_buses,
+def newton_raphson_power_flow(Ybus, P_net, Q_net, slack_bus, pv_buses, pq_buses,
                               Vm_init, Va_init_deg, tol=1e-8, max_iter=20):
     
     Vm = Vm_init.astype(float).copy()
@@ -140,7 +140,7 @@ def newton_raphson_power_flow(Ybus, P_spec, Q_spec, slack_bus, pv_buses, pq_buse
     angle_buses = [i for i in range(n) if i != slack_bus]
     
     for iteration in range(max_iter):
-        mismatch = power_mismatch(Ybus=Ybus, Vm=Vm, Va_deg=Va_deg, P_spec=P_spec, Q_spec=Q_spec, slack_bus=slack_bus, pq_buses=pq_buses)
+        mismatch = power_mismatch(Ybus=Ybus, Vm=Vm, Va_deg=Va_deg, P_net=P_net, Q_net=Q_net, slack_bus=slack_bus, pq_buses=pq_buses)
         max_mismatch = np.max(np.abs(mismatch))
         print(f"Iteration {iteration+1}: max mismatch = {max_mismatch:.2e}")
         
