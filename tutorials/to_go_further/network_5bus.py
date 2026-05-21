@@ -19,6 +19,8 @@ def create_5bus_network():
         net, b2,
         p_mw=150,
         vm_pu=1.05,
+        min_p_mw=50.0,
+        max_p_mw=250.0,
         min_q_mvar=-200,
         max_q_mvar=200,
         name="PV Generator Bus 2"
@@ -28,6 +30,8 @@ def create_5bus_network():
         net, b5,
         p_mw=100,
         vm_pu=1.00,
+        min_p_mw=20.0,
+        max_p_mw=150.0,
         min_q_mvar=-100,
         max_q_mvar=100,
         name="PV Generator Bus 5"
